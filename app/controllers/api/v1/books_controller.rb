@@ -17,8 +17,7 @@ module Api
       end
 
       def create
-        SendMailsWorker.new.perform_async(100_000_000)
-
+        # SendMailsWorker.new.perform_async(100_000_000)
         book = Book.new(book_params)
         if book.save!
           render json: book, status: :created
