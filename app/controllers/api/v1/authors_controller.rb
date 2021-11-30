@@ -20,7 +20,7 @@ module Api
         if author.save
           render json: author, status: :created
         else
-          render json: author.errors.full_error_messages, status: :unprocessable_entity
+          render json: author.errors, status: :unprocessable_entity
         end
       end
 
