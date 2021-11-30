@@ -16,6 +16,12 @@ module Api
       end
 
       def create
+        author = Author.new(author_params)
+        if author.save
+          render json: author, status: :created
+        else
+          render json: author.errors.full_error_messages, status: :unprocessable_entity
+        end
       end
 
       def update
@@ -26,8 +32,19 @@ module Api
 
       private
 
+      def limit
+        params.fetch(:limit, 50)
+      end
+      def offset
+        params.fetch(:offset, 0)
+      end
+
       def set_author
         @author = Author.find(params[:id])
+      end
+
+      def author_params
+        params.require(:author).permit(:first_name, :last_name, :email)
       end
     end
   end
