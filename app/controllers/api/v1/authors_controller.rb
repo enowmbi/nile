@@ -1,7 +1,7 @@
 module Api
   module V1
     class AuthorsController < ApplicationController
-      before_action :set_author, only: %i[show]
+      before_action :set_author, only: %i[show update destroy]
       def index
         authors = Author
           .all
@@ -25,9 +25,11 @@ module Api
       end
 
       def update
-      end
-
-      def destroy
+        if @author.update(author_params)
+          render json: @author
+        else
+          render json :@author.errors.full_error_messages, status: :unprocessable_entity
+        end
       end
 
       private
