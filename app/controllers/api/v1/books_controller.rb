@@ -1,8 +1,6 @@
 module Api
   module V1
     class BooksController < ApplicationController
-      rescue_from ActiveRecord::RecordNotFound, with: :display_record_not_found_error_message
-
       before_action :set_book, only: %i[show update destroy]
 
       def index
