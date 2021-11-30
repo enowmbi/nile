@@ -32,6 +32,14 @@ module Api
         end
       end
 
+      def destroy
+       if @author.destroy
+        head :no_content
+       else
+         render json: @author.errors.full_error_messages, status: :unprocessable_entity
+       end
+      end
+
       private
 
       def limit
