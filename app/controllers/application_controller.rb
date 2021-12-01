@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
 
   private
 
-  def parameter_missing
-    render json: {error: "Parameter missing for #{params[:action]} action of #{params[:controller]} controller"}, status: :not_found
+  def parameter_missing(e)
+    render json: e.message, status: :unprocessable_entity
   end
 end
