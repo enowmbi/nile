@@ -4,6 +4,7 @@ module Api
       before_action :set_author, only: %i[show update destroy]
       def index
         authors = Author
+          .includes(:books)
           .all
           .limit(limit)
           .offset(offset)
@@ -20,7 +21,7 @@ module Api
         if author.save
           render json: author, status: :created
         else
-          render json: author.errors, status: :unprocessable_entity
+          render json: author.errors.full_messages, status: :unprocessable_entity
         end
       end
 
@@ -28,7 +29,7 @@ module Api
         if @author.update(author_params)
           render json: @author
         else
-          render json :@author.errors.full_error_messages, status: :unprocessable_entity
+          render json :@author.errors.full_messages, status: :unprocessable_entity
         end
       end
 
@@ -36,7 +37,7 @@ module Api
        if @author.destroy
         head :no_content
        else
-         render json: @author.errors.full_error_messages, status: :unprocessable_entity
+         render json: @author.errors.full_messages, status: :unprocessable_entity
        end
       end
 
