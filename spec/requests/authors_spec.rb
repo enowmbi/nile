@@ -82,10 +82,34 @@ RSpec.describe "Authors", type: :request do
     end
   end
 
-  xdescribe "GET /update" do
+  describe "Put /api/v1/authors/id" do
+    let!(:valid_params) do
+      {
+        author: {
+          first_name: "James",
+          last_name: "Bond",
+          email: "james_bond@goldfinger.net"
+        }
+      }
+    end
+
+    before(:all){ @first = Author.second }
+
+    before(:each){ put "/api/v1/authors/#{@first.id}", params: valid_params }
+
     it "returns http success" do
-      get "/authors/update"
       expect(response).to have_http_status(:success)
+    end
+
+    it "returns selected author as JSON" do
+      expect(response.content_type).to eq("application/json; charset=utf-8")
+    end
+
+    it "returns only updated author" do
+      expect([JSON.parse(response.body)].size).to eq(1)
+      expect(JSON.parse(response.body)["first_name"]).to eq("James")
+      expect(JSON.parse(response.body)["last_name"]).to eq("Bond")
+      expect(JSON.parse(response.body)["email"]).to eq("james_bond@goldfinger.net")
     end
   end
 
