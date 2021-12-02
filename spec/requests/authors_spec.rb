@@ -46,6 +46,16 @@ RSpec.describe "Authors", type: :request do
     let!(:valid_params) do
       {
         author: {
+          first_name: "John",
+          last_name: "Doe",
+          email: "john_doe@example.com"
+        }
+      }
+    end
+
+    let!(:valid_params2) do
+      {
+        author: {
           first_name: "Jane",
           last_name: "Doe",
           email: "jane_doe@example.com"
@@ -60,7 +70,7 @@ RSpec.describe "Authors", type: :request do
     end
 
     it "increments the authors collection by one" do
-      expect{post "/api/v1/authors", params: valid_params }.to change(Author, :count).by(1)
+      expect{post "/api/v1/authors", params: valid_params2 }.to change(Author, :count).by(1)
     end
 
     it "returns the last author created" do
