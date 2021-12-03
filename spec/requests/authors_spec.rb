@@ -115,7 +115,7 @@ RSpec.describe "Authors", type: :request do
   describe "Delete /api/v1/authors/id" do
     let!(:last){ Author.last }
 
-    it "returns decrements authors count by one and return no_content response" do
+    it "decrements author collection by one and returns no_content response" do
       expect{ delete "/api/v1/authors/#{last.id}" }.to change(Author, :count).by(-1)
       expect(response).to have_http_status(:no_content)
     end
