@@ -9,7 +9,7 @@ RSpec.describe "Authors", type: :request do
       Author.destroy_all
     end
 
-    describe "GET /api/v1/index" do
+    describe "GET /api/v1/authors" do
       before(:each){ get "/api/v1/authors/" }
 
       it "returns http success" do
@@ -25,7 +25,7 @@ RSpec.describe "Authors", type: :request do
       end
     end
 
-  describe "GET /api/v1/id" do
+  describe "GET /api/v1/authors/id" do
     let!(:second){ Author.second }
     before(:each){ get "/api/v1/authors/#{second.id}" }
 
@@ -42,7 +42,7 @@ RSpec.describe "Authors", type: :request do
     end
   end
 
-  describe "GET /api/v1/create" do
+  describe "POST /api/v1/authors" do
     let!(:valid_params) do
       {
         author: {
