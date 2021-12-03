@@ -26,8 +26,8 @@ RSpec.describe "Authors", type: :request do
     end
 
   describe "GET /api/v1/id" do
-    before(:all){ @second = Author.second }
-    before(:each){ get "/api/v1/authors/#{@second.id}" }
+    let!(:second){ Author.second }
+    before(:each){ get "/api/v1/authors/#{second.id}" }
 
     it "returns http success" do
       expect(response).to have_http_status(:success)
@@ -83,6 +83,7 @@ RSpec.describe "Authors", type: :request do
   end
 
   describe "Put /api/v1/authors/id" do
+    let!(:first){ Author.first }
     let!(:valid_params) do
       {
         author: {
@@ -93,9 +94,7 @@ RSpec.describe "Authors", type: :request do
       }
     end
 
-    before(:all){ @first = Author.second }
-
-    before(:each){ put "/api/v1/authors/#{@first.id}", params: valid_params }
+    before(:each){ put "/api/v1/authors/#{first.id}", params: valid_params }
 
     it "returns http success" do
       expect(response).to have_http_status(:success)
