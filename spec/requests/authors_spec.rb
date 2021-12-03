@@ -100,7 +100,7 @@ RSpec.describe "Authors", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns selected author as JSON" do
+    it "returns updated author as JSON" do
       expect(response.content_type).to eq("application/json; charset=utf-8")
     end
 

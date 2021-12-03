@@ -91,33 +91,30 @@ RSpec.describe "Books", type: :request do
     end
   end
 
-  xdescribe "Put /api/v1/authors/id" do
-    let!(:first){ Author.first }
+  describe "Put /api/v1/books/id" do
+    let!(:book){ FactoryBot.create(:book, title: "Refactory Stages") }
+
     let!(:valid_params) do
       {
-        author: {
-          first_name: "James",
-          last_name: "Bond",
-          email: "james_bond@goldfinger.net"
+        book: {
+          title: "Writing Clean Code",
         }
       }
     end
 
-    before(:each){ put "/api/v1/authors/#{first.id}", params: valid_params }
+    before(:each){ put "/api/v1/books/#{book.id}", params: valid_params }
 
     it "returns http success" do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns selected author as JSON" do
+    it "returns updated book as JSON" do
       expect(response.content_type).to eq("application/json; charset=utf-8")
     end
 
-    it "returns only updated author" do
+    it "returns only updated book" do
       expect([JSON.parse(response.body)].size).to eq(1)
-      expect(JSON.parse(response.body)["first_name"]).to eq("James")
-      expect(JSON.parse(response.body)["last_name"]).to eq("Bond")
-      expect(JSON.parse(response.body)["email"]).to eq("james_bond@goldfinger.net")
+      expect(JSON.parse(response.body)["title"]).to eq("Writing Clean Code")
     end
   end
 
