@@ -69,7 +69,7 @@ RSpec.describe "Authors", type: :request do
       expect(response).to have_http_status(:created)
     end
 
-    it "increments the authors collection by one" do
+    it "increments author collection by one" do
       expect{post "/api/v1/authors", params: valid_params2 }.to change(Author, :count).by(1)
     end
 

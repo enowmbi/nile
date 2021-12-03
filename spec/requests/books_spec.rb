@@ -33,51 +33,60 @@ RSpec.describe "Books", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns selected author as JSON" do
+    it "returns selected book as JSON" do
       expect(response.content_type).to eq("application/json; charset=utf-8")
     end
 
-    it "returns only selected author" do
+    it "returns only selected book" do
       expect([JSON.parse(response.body)].size).to eq(1)
     end
   end
 
-  xdescribe "GET /api/v1/create" do
+  describe "POST /api/v1/books" do
+    let!(:author) do 
+      FactoryBot.create(
+        :author,
+        first_name: "John",
+        last_name: "Doe",
+        email: "john_doe@example.com"
+      )
+    end
+
     let!(:valid_params) do
       {
-        author: {
-          first_name: "John",
-          last_name: "Doe",
-          email: "john_doe@example.com"
+        book: {
+          title: "Writing Clean Code",
+          author_id: author.id,
+          published_date: 1.year.ago
         }
       }
     end
 
     let!(:valid_params2) do
       {
-        author: {
-          first_name: "Jane",
-          last_name: "Doe",
-          email: "jane_doe@example.com"
+        book: {
+          title: "The little things",
+          author_id: author.id,
+          published_date: 1.year.ago
         }
       }
     end
 
-    before(:each){ post "/api/v1/authors", params: valid_params }
+    before(:each){ post "/api/v1/books", params: valid_params }
 
     it "returns http created" do
       expect(response).to have_http_status(:created)
     end
 
-    it "increments the authors collection by one" do
-      expect{post "/api/v1/authors", params: valid_params2 }.to change(Author, :count).by(1)
+    it "increments book collection by one" do
+      expect{post "/api/v1/books", params: valid_params2 }.to change(Book, :count).by(1)
     end
 
-    it "returns the last author created" do
-      expect(JSON.parse(response.body)["id"]).to eq(Author.last.id)
+    it "returns the last book created" do
+      expect(JSON.parse(response.body)["id"]).to eq(Book.last.id)
     end
 
-    it "returns the created author as json" do
+    it "returns the created book as json" do
       expect(response.content_type).to eq("application/json; charset=utf-8")
     end
   end
