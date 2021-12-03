@@ -25,9 +25,9 @@ RSpec.describe "Books", type: :request do
       end
     end
 
-  xdescribe "GET /api/v1/id" do
-    let!(:second){ Author.second }
-    before(:each){ get "/api/v1/authors/#{second.id}" }
+  describe "GET /api/v1/books/id" do
+    let!(:book){ Book.first }
+    before(:each){ get "/api/v1/books/#{book.id}" }
 
     it "returns http success" do
       expect(response).to have_http_status(:success)
