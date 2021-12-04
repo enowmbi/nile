@@ -8,4 +8,5 @@ Rails.application.routes.draw do
       resources :authors, only: %i[index show create update destroy]
     end
   end
+  match '*path' => 'errors#error_404', via: :all
 end
