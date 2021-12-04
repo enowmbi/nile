@@ -58,7 +58,7 @@ module Api
         params.require(:author).permit(:first_name, :last_name, :email)
       end
 
-      def display_record_not_found_error_message
+      def record_not_found
         render json: {error: "Author with specified ID(#{params[:id]}) Not found"}, status: :not_found
       end
     end

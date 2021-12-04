@@ -60,7 +60,7 @@ module Api
         (params[:page].to_i * params[:limit].to_i) || 0
       end
 
-      def display_record_not_found_error_message
+      def record_not_found
         render json: {error: "Book with specified ID(#{params[:id]}) Not found"}, status: :not_found
       end
     end
